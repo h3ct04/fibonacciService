@@ -1,43 +1,38 @@
 // index.js
 
 var express = require('express');
-// var seq = require('../fibonacci/sequence')
+var seq = require('../fibonacci/sequence');
 var app = express(); 
 var bodyParser = require("body-parser");
+
+// Se inicializa el arreglo para guardar la secuencia.
+var fib = [];
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.get('/', function (req, res) {
     // res.sendFile( __dirname + '/views/index.html' );
-    res.send('<html><body>'
-		      + '<h1>Serie Fibonacci</h1>'
-		      + '<form method="get" action="/position-init">'
-		      + '<label for="nombre">Posición de serie: </label>'
-		      + '<input type="text" name="position">'	
-		      + '<input type="submit" value="Enviar"/>'
-		      + '</form>'
-		      + '</body></html>');
+    res.send(   '<html><body>'
+                + '<h1>Serie Fibonacci</h1>'
+                + '<form method="post" action="/position">'
+                + '<label for="tags">Posición de serie: </label>'
+                + '<input type="number" name="position">'	
+                + '<input type="submit" value="Enviar"/>'
+                + '</form>');
 });
 
-app.get('/position-init', function (req, res) {
+app.post('/position', function (req, res) {
     
-    var n = req.query.position || ' ';
-    var fib = [];
-
-    fib[0] = 0;
-    fib[1] = 1;
-    // calcula serie fibonacci hasta posición que se requiere. 
-    for(i=2; i<=(n+1); i++)
-        fib[i] = fib[i-2] + fib[i-1];
-
-    
-    
+    // Se toma el valor de la posición se que se mostrara. 
+    var n = req.body.position || ' ';
+    fib = seq.seqFib( n );
+    // Se Muertra la posición n-1 y n si n es mayor a 0
     if( fib[n] > 0 ){
         res.send('<html><body>'
 		      + '<h1>Serie Fibonacci</h1>'
-		      + '<form method="get" action="/position-init">'
-		      + '<label for="nombre">Posición de serie: </label>'
+		      + '<form method="post" action="/position">'
+		      + '<label for="tags">Posición de serie: </label>'
 		      + '<input type="number" name="position">'	
 		      + '<input type="submit" value="Enviar"/>'
               + '</form>'
@@ -50,14 +45,14 @@ app.get('/position-init', function (req, res) {
     }else{
         res.send('<html><body>'
 		      + '<h1>Serie Fibonacci</h1>'
-		      + '<form method="get" action="/position-init">'
-		      + '<label for="nombre">Posición de serie: </label>'
+		      + '<form method="get" action="/position">'
+		      + '<label for="tags">Posición de serie: </label>'
 		      + '<input type="number" name="position">'	
 		      + '<input type="submit" value="Enviar"/>'
               + '</form>'
               + '</br>'
               + '</br>'
-              + '<h2> El numero tiene que ser mayor o igual a 1 </h2>'
+              + 'ERROR: La posición tiene que ser mayor o igual a 1.'
 		      + '</body></html>');
         
     }
