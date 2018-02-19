@@ -19,7 +19,7 @@ for (i = (random - 10); i < random; i++){
     num = num + seq[i];
 }
 
-describe("TEST: funcion para calculo de secuencia fibonacci: ", function() {
+describe("TEST: función para calculo de secuencia fibonacci: ", function() {
     // Particularidad de la secuencia: Si se suman 10 terminos de la secuencia el resultado es multiplo de 11
     it("Chequear: Al sumar 10 numeros se obtiene multiplo de 11", function() {
                       
@@ -27,7 +27,7 @@ describe("TEST: funcion para calculo de secuencia fibonacci: ", function() {
         assert.equal(result, 0 );			
     });
     // // Particularidad de la secuencia: El resultado de la suma es 11 veces el 7mo valor de los 10 sumados. 
-    it("Chequear: 11 veces el 7to termino de la suma", function() {
+    it("Chequear: es 11 veces el 7to termino de la suma", function() {
                       
         result = num / 11;
         assert.equal(result, seq[ seven ] );
